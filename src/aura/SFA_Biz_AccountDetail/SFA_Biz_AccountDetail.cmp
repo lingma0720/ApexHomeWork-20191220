@@ -1,0 +1,13 @@
+<aura:component>
+	<aura:attribute name="record" type="Object" access="public" description="work order record" />
+    <aura:attribute name="config" type="Object" access="public" description="config data contains field config and etc." />
+    <div>
+        <lightning:layout multipleRows="true">
+            
+            <lightning:layoutItem size="12" mediumDeviceSize="12" flexibility="auto" largeDeviceSize="12">
+                <c:Base_RecordDetailCmp aura:id="record-detail" mode="{!v.mode}"/>
+            </lightning:layoutItem>
+            
+        </lightning:layout>
+    </div>
+</aura:component>

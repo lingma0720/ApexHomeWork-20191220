@@ -1,0 +1,8 @@
+<aura:component description="Base_OptionCmp">
+    <aura:attribute name="label" type="String" />
+
+
+    <span class="slds-media__body">
+      <span class="slds-truncate">{!v.label}</span>
+    </span>
+</aura:component>

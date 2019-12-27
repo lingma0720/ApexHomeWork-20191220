@@ -1,0 +1,109 @@
+<aura:component access="global" description="Base_ComboboxCmp">
+
+    <aura:attribute access="global" name="label" type="String" required="true" description=""/>
+    <aura:attribute access="global" name="options" type="List" required="true" description=""/>
+
+    <aura:attribute access="global" name="name" type="String" description="Specifies the name of an input element."/>
+    <aura:attribute access="global" name="value" type="String" description="Specifies the value of an input element."/>
+    <aura:attribute access="global" name="valueSeparator" type="String" description="Specifies the value of an input element." default=","/>
+    <aura:attribute access="global" name="selection" type="List" description="List of selected items (a list of string)"/>
+
+    <aura:attribute access="global" name="variant" type="String" description="The variant changes the appearance of an input field. Accepted variants include standard and label-hidden. This value defaults to standard."/>
+    <aura:attribute access="global" name="disabled" type="Boolean" default="false" description=""/>
+    <aura:attribute access="global" name="readonly" type="Boolean" description=""/>
+    <aura:attribute access="global" name="class" type="String" description=""/>
+    <aura:attribute access="global" name="title" type="String" description=""/>
+    <aura:attribute access="global" name="placeholder" type="String" description=""/>
+    <aura:attribute access="global" name="hasFocus" type="Boolean" default="false" description=""/>
+
+    <aura:attribute access="public" type="String" name="displayFormat" default=""/>
+
+    <aura:registerEvent name="onchange" type="c:Base_GeneralEvent" description="Component event fired when a search needs to be performed on the server-side. The search method should be called by the handler of this event."/>
+
+    <!-- <aura:attribute access="global" name="onchange" type="Object" description=""/> -->
+    <aura:attribute access="global" name="onBlur" type="Object" description=""/>
+    <aura:attribute access="global" name="onFocus" type="Object" description=""/>
+
+    <aura:attribute access="private" type="String" name="displayValue" default=""/>
+    <aura:attribute access="private" type="List" name="searchResults" default="[]"/>
+    <aura:attribute access="private" type="Map" name="blurTimeout"/>
+    <aura:attribute access="private" type="Map" name="searchThrottlingTimeout"/>
+    <aura:attribute access="private" name="clonedOptions" type="List" description=""/>
+    <aura:attribute access="private" name="selectAll" type="Boolean" default="false" description="represent if the all options are selected"/>
+
+    <aura:handler name="change" value="{!v.options}" action="{!c.handleOptionChanged}"/>
+    <aura:handler name="change" value="{!v.value}" action="{!c.refreshState}"/>
+
+    <aura:method access="global" name="flush" action="{!c.refreshState}" description="flush the options state">
+    </aura:method>
+
+    <div class="{!v.class}">
+        <div class="slds-form-element">
+            <aura:if isTrue="{! not(v.variant == 'label-hidden')}">
+                <label class="slds-form-element__label" for="{# globalId + '_combobox' }">{!v.label}</label>
+            </aura:if>
+            <div class="slds-form-element__control">
+                <div class="slds-combobox_container">
+                    <div class="{! 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click '+ ( and(v.hasFocus,not(v.disabled)) ? 'slds-is-open' : 'slds-combobox-lookup') }"
+                         aria-expanded="{! and(v.hasFocus,not(v.disabled)) }" aria-haspopup="listbox" role="combobox">
+
+                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+
+                            <input type="text" class="slds-input slds-combobox__input slds-combobox__input-value" aria-autocomplete="list" aria-controls="{# globalId + '_listbox' }" autocomplete="off" role="textbox"
+                                   id="{# globalId + '_combobox' }"
+                                   aura:id="searchInput"
+                                   placeholder="{!v.placeholder}"
+                                   value="{! v.displayValue}"
+                                   onfocus="{!c.onFocus}"
+                                   onblur="{!c.onBlur}"
+                                   readonly="true"
+                                   disabled="{!v.disabled}"/>
+                            <lightning:icon iconName="utility:down" size="x-small" alternativeText="Search icon"
+                                            class="slds-input__icon slds-input__icon_right"/>
+                        </div>
+
+                        <!-- List box start -->
+                        <div id="{# globalId + '_listbox' }" role="listbox">
+                            <ul class="cap-dropdown slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid"
+                                role="presentation" onscroll="{!c.onSrcoll}">
+                                <li role="presentation" class="slds-listbox__item">
+                                        <span id="select-all" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option"
+                                              onclick="{!c.onSelectAll}">
+                                            <span class="slds-media__figure slds-listbox__option-icon icon-container-border">
+                                                <aura:if isTrue="{!v.selectAll}">
+                                                    <lightning:icon iconName="utility:check" size="x-small" class="slds-icon-utility-check slds-current-color"/>
+                                                </aura:if>
+
+                                            </span>
+                                            <span class="slds-media__body">
+                                              <span class="slds-truncate">Select All</span>
+                                            </span>
+                                        </span>
+                                </li>
+                                <aura:iteration items="{!v.clonedOptions}" var="item">
+                                    <li role="presentation" class="slds-listbox__item">
+                                        <span id="{!item.value}" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option"
+                                              onclick="{!c.onOptionClick}">
+                                            <span class="slds-media__figure slds-listbox__option-icon icon-container-border">
+                                                <aura:if isTrue="{!item.selected}">
+                                                    <lightning:icon iconName="utility:check" size="x-small" class="slds-icon-utility-check slds-current-color"/>
+                                                </aura:if>
+
+                                            </span>
+                                            <span class="slds-media__body">
+                                              <span class="slds-truncate">{!item.label}</span>
+                                            </span>
+                                        </span>
+                                    </li>
+                                </aura:iteration>
+
+                            </ul>
+                        </div>
+                        <!-- List box end -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

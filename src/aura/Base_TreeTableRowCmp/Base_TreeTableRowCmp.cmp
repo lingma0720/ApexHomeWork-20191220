@@ -1,0 +1,49 @@
+<!--
+ - 2018/10/17  Zhuoxue Jin <zhuoxue.jin@capgemini.com>
+ - Created
+ -->
+
+<aura:component description="Base_TreeTableRowCmp">
+    <aura:attribute access="global" name="columns" type="List"/>
+    <aura:attribute access="global" name="data" type="Object"/>
+    <aura:attribute access="global" name="index" type="Integer"/>
+    <aura:attribute access="global" name="class" type="String"/>
+    <aura:attribute access="global" name="level" type="Integer" default="0"/>
+    <aura:attribute access="global" name="hidden" type="Boolean" default="false"/>
+    <aura:attribute access="global" name="disable" type="Boolean" default="false"/>
+
+
+    <aura:attribute access="private" name="expanded" type="Boolean" default="false"/>
+    <aura:attribute access="private" name="hasInitNodes" type="Boolean" default="false"/>
+
+    <aura:registerEvent name="rowAction" type="c:Base_GeneralEvent" />
+
+    <aura:attribute access="private" type="object" name="recordVal" description="The value to be displayed"/>
+    <tr class="{!v.hidden ? 'slds-hide' : v.class + ' row-container slds-hint-parent'}" aria-level="{!v.level}">
+        <aura:if isTrue="{! not(v.disable)}">
+            <td class="slds-tree__item">
+                <aura:if isTrue="{!v.expanded}">
+                    <lightning:buttonIcon iconName="utility:chevrondown" variant="bare" onclick="{! c.toggleExpandStatus }" alternativeText="Expand" />
+                    <aura:set attribute="else">
+                        <lightning:buttonIcon iconName="utility:chevronright" variant="bare" onclick="{! c.toggleExpandStatus }" alternativeText="Collapse" />
+                    </aura:set>
+                </aura:if>
+            </td>
+            <aura:set attribute="else">
+                <td class="slds-tree__item">
+                </td>
+            </aura:set>
+        </aura:if>
+        <aura:iteration items="{!v.columns}" var="column" indexVar="{index}">
+            <aura:if isTrue="{!column.type}">
+                <c:Base_TableCellCmp column="{!column}" rowIndex="{!index}" data="{!v.data.record}"/>
+            </aura:if>
+        </aura:iteration>
+    </tr>
+    <aura:if isTrue="{!v.hasInitNodes}">
+        <aura:iteration items="{!v.data.nodes}" var="node" indexVar="{index}">
+            <c:Base_TreeTableRowCmp index="{! index}" data="{!node}" columns="{!v.columns}" hidden="{!not(v.expanded)}"
+                                    level="{! node.level}" disable="{! node.disable}" class="{! node.class}"/>
+        </aura:iteration>
+    </aura:if>
+</aura:component>

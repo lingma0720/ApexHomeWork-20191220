@@ -1,0 +1,24 @@
+<!--
+ - Created by meixing on 2019-10-05.
+ -->
+
+ <aura:component description="LC_EmployeePreview" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickAction">
+
+        <div class="cLC_EmployeePreview slds-grid slds-gutters " style="display: flex">
+            <div class="slds-col slds-size_1-of-3" style = "border-right: 1px solid">
+                <c:LC_EmployeeDetail aura:id="employee-detail" recordId="{!v.recordId}" />
+                <c:LC_EmployeeInfo aura:id = "employee-detail" recordId="{!v.recordId}" />
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+                <!--<c:LC_DepartmentStructure aura:id="department-structure" employeeId="{!v.recordId}" />
+                <c:LC_ExperienceList aura:id="work-experience" employeeId="{!v.recordId}" isWorkExperience="true"/>
+                <c:LC_ExperienceList aura:id="project-experience" employeeId="{!v.recordId}" isProjectExperience="true" />-->
+                <c:LC_EducationExperienceCmp aura:id="work-education" employeeId="{!v.recordId}" isEducation="true"/>
+                <c:LC_WorkExperienceCmp aura:id="work-experience" employeeId="{!v.recordId}" isProjectExperience = "true"/>
+                <!--<c:LC_EmployeeDescriptionCmp aura:id = "employee-description" employeeId = "{!v.recordId}"/>-->
+                <c:LC_EmployeeDescriptionCmp  recordId = "{!v.recordId}"/>
+
+            </div>       
+        </div>
+    
+    </aura:component>

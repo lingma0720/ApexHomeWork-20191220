@@ -1,0 +1,161 @@
+<!--<apex:page controller="AccountFilter" sidebar="false" >
+ 
+  <apex:form >
+  <apex:pageMessages id="errors" />
+ 
+  <apex:pageBlock title="Account Filter" mode="edit">
+ 
+  <table width="100%" border="0">
+  <tr>  
+    <td width="200" valign="top">
+ 
+      <apex:pageBlock title="Account Filter Criteria" mode="edit" id="criteria">
+ 
+      <script type="text/javascript">
+      function doSearch() {
+        searchServer(
+          document.getElementById("Name").value,
+          document.getElementById("AccountNumber").value,
+          document.getElementById("Provice__c").value,
+          document.getElementById("City__c").value,
+                    );
+      }
+      </script>
+ 
+      <apex:actionFunction name="searchServer" action="{!runSearch}" rerender="results,debug,errors">
+          <apex:param name="Name" value="" />
+          <apex:param name="AccountNumber" value="" />
+          <apex:param name="provice" value="" />
+          <apex:param name="city" value="" />
+          
+      </apex:actionFunction>
+ 
+     <apex:pageBlockSection  title = "Account Filter Conditions">
+                 
+                 <apex:pageBlockSectionItem >
+                     <apex:outputLabel value="Name" />
+                     <apex:inputField value="{!account.Name}" id = "Account_Name"/>
+                 </apex:pageBlockSectionItem> 
+                 
+                 <apex:pageBlockSectionItem >
+                     <apex:outputLabel value="Account Number" />
+                     <apex:inputField value="{!account.AccountNumber}"/>
+                 </apex:pageBlockSectionItem> 
+                 
+                 <apex:pageBlockSectionItem >
+                     <apex:outputLabel value="Provice" />
+                     <apex:inputField value="{!account.Province__c}"/>
+                 </apex:pageBlockSectionItem>
+                 
+                 <apex:pageBlockSectionItem >
+                     <apex:outputLabel value="City" />
+                     <apex:inputField value="{!account.City__c}"/>
+                 </apex:pageBlockSectionItem>
+    </apex:pageBlockSection>
+ 
+    </apex:pageBlock>
+ 
+    </td>
+    <td valign="top">
+ 
+    <apex:pageBlock mode="edit" id="results">
+ 
+        <apex:pageBlockTable value="{!contacts}" var="contact">
+ 
+            <apex:column >
+                <apex:facet name="header">
+                    <apex:commandLink value="First Name" action="{!toggleSort}" rerender="results,debug">
+                        <apex:param name="sortField" value="firstName" assignTo="{!sortField}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputField value="{!contact.firstName}"/>
+            </apex:column>
+ 
+            <apex:column >
+                <apex:facet name="header">
+                    <apex:commandLink value="Last Name" action="{!toggleSort}" rerender="results,debug">
+                        <apex:param name="sortField" value="lastName" assignTo="{!sortField}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputField value="{!contact.lastName}"/>
+            </apex:column>
+ 
+            <apex:column >
+                <apex:facet name="header">
+                    <apex:commandLink value="Account" action="{!toggleSort}" rerender="results,debug">
+                        <apex:param name="sortField" value="account.name" assignTo="{!sortField}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputField value="{!contact.account.name}"/>
+            </apex:column>
+ 
+            
+ 
+        </apex:pageBlockTable>
+ 
+    </apex:pageBlock>
+ 
+    </td>
+  </tr>
+  </table>
+ 
+  <apex:pageBlock title="Debug - SOQL" id="debug">
+      <apex:outputText value="{!debugSoql}" />           
+  </apex:pageBlock>    
+ 
+  </apex:pageBlock>
+ 
+  </apex:form>
+ 
+</apex:page>-->
+
+<apex:page controller="AccountFilter"  renderAs = "PDF" sidebar="false">
+<head>
+  <style>
+    
+     .requiredInput {
+        width: 20%;
+     }
+  </style>
+</head>
+    <apex:form >
+        <apex:pageBlock title="Account Filter Conditions">
+
+             <apex:pageBlockSection columns="3">
+                  <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Name"  />
+                        <apex:inputField value="{!account.Name}" /> 
+                  </apex:pageBlockSectionItem>
+
+                 <apex:pageBlockSectionItem >
+                     <apex:outputLabel value="Account Number" />
+                     <apex:inputField value="{!account.AccountNumber}"/>
+                 </apex:pageBlockSectionItem> 
+                 
+                 <apex:pageBlockSectionItem >
+                     <apex:outputLabel value="Provice" />
+                     <apex:inputField value="{!account.Province__c}"/>
+                 </apex:pageBlockSectionItem>
+                 
+                 <apex:pageBlockSectionItem >
+                     <apex:outputLabel value="City" />
+                     <apex:inputField value="{!account.City__c}"/>
+                 </apex:pageBlockSectionItem>
+                 
+                 <apex:commandButton value="Filter" action="{!runSearch}"  style="float: right;"/>
+             </apex:pageBlockSection>
+            
+        </apex:pageBlock> 
+
+
+            <apex:pageBlock title="Account Display">
+                 
+                 <apex:pageBlockTable value="{!listOfAccounts}" var="record">
+                    <apex:column value="{!record.Name}" headerValue="Account Name"/>
+                    <apex:column value="{!record.AccountNumber}" headerValue="Account Number" />
+                    <apex:column value="{!record.Province__c}" headerValue="Account Provice"/>
+                    <apex:column value="{!record.City__c}" headerValue="Account City"/>
+                 </apex:pageBlockTable>     
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

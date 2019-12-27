@@ -1,0 +1,22 @@
+<!--
+ - Created by meixing on 2019-10-04.
+ -->
+
+<aura:component description="Base_TableRowCmp">
+    <aura:attribute access="global" name="columns" type="List"/>
+    <aura:attribute access="global" name="data" type="Object"/>
+    <aura:attribute access="global" name="rowIndex" type="Integer"/>
+
+    <aura:attribute access="private" name="active" type="Boolean"/>
+    <aura:method name="setActive" action="{!c.setActive}">
+        <aura:attribute name="active" type="Boolean"/>
+    </aura:method>
+
+    <aura:registerEvent name="TableRowFocus" type="c:Base_GeneralEvent"/>
+
+    <tr class="{!if(v.active, 'focus-sign', '')}" onclick="{!c.onTableRowClick}">
+        <aura:iteration items="{!v.columns}" var="column" indexVar="index">
+            <c:Base_TableCellCmp column="{!column}" data="{!v.data}" rowIndex="{!v.rowIndex}" colIndex="{!index}"/>
+        </aura:iteration>
+    </tr>
+</aura:component>

@@ -1,0 +1,12 @@
+<!--
+ - Created by meixing on 2019-10-05.
+ -->
+
+<aura:component description="LC_DepartmentService" controller="LC_DepartmentController">
+
+    <aura:method name="getEmployeeDepartments" access="public" action="{!c.getDepartmentsByEmployeeId}" >
+        <aura:attribute access="public" name="employeeId" type="String" required="true" />
+    </aura:method>
+
+    <c:Base_ServerActionServiceCmp aura:id="actionService"/>
+</aura:component>

@@ -1,0 +1,10 @@
+/**
+ * 2018/10/12  Zhuoxue Jin <zhuoxue.jin@capgemini.com>
+ * - Created
+ */
+.THIS .slds-icon-text-default {
+    /*fill : white;*/
+}
+.THIS .modalContent {
+	overflow: auto;
+}

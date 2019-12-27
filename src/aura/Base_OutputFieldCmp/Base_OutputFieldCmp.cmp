@@ -1,0 +1,83 @@
+<!--
+ - 10/10/2018  Mei Xing <mei.xing@capgemini.com>
+ - Created
+
+ - 12/21/2018 Mei Xing
+ - Modified for disabled attribute in html
+ -->
+<aura:component description="Base_OutputFieldCmp">
+    <aura:attribute access="global" type="Object" name="record" required="true" description="The related record"/>
+    <aura:attribute access="global" type="Object" name="field" required="true" description="The related record"/>
+
+    <aura:handler name="change" value="{!v.record}" action="{!c.recordChange}"/>
+    <aura:handler name="change" value="{!v.field}" action="{!c.recordChange}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:attribute access="private" type="String" name="value" description="The value to be displayed"/>
+    <aura:attribute access="private" type="String" name="url" description="The value to be link"/>
+
+
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="6" mediumDeviceSize="6" flexibility="auto" largeDeviceSize="{!v.field.labelColumnSize}">
+            <c:Base_FieldLabelCmp label="{!v.field.label}" tooltip="{!v.field.tooltip}" required="{!v.field.required}"/>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="6" mediumDeviceSize="6" flexibility="auto" largeDeviceSize="{!v.field.valueColumnSize}">
+            <aura:if isTrue="{! (v.field.type == 'boolean')}">
+                <lightning:input class="slds-input" type="checkbox" name="{! v.field.name}" label="{! v.field.label}" value="{! v.value}" variant="label-hidden" disabled="true"/>
+            </aura:if>
+            <!--Picklist Type -->
+            <aura:if isTrue="{! or(or(v.field.type == 'multipicklist',v.field.type == 'picklist'),v.field.type == 'string')}">
+                <lightning:formattedText class="{!v.field.textclass}" value="{! v.value}" />
+            </aura:if>
+
+            <!-- Reference Type -->
+            <aura:if isTrue="{! (v.field.type == 'reference')}">
+                <aura:if isTrue="{! v.field.disabledurl}">
+                    <lightning:formattedUrl class="{!v.field.textclass}" value="{!v.url}" label="{!v.value}" target="_blank" />
+                    <aura:set attribute="else">
+                        <lightning:formattedText class="{!v.field.textclass}" value="{! v.value}" />
+                    </aura:set>
+                </aura:if>
+            </aura:if>
+            <!-- phone type -->
+            <aura:if isTrue="{! (v.field.type == 'phone')}">
+                <lightning:formattedPhone class="{!v.field.textclass}" value="{! v.value}" />
+            </aura:if>
+            <!-- email type -->
+            <aura:if isTrue="{! (v.field.type == 'email')}">
+                <lightning:formattedEmail class="{!v.field.textclass}" value="{! v.value}" />
+            </aura:if>
+            <!-- Long Text type -->
+            <aura:if isTrue="{! (v.field.type == 'textarea')}">
+                <lightning:textarea variant="label-hidden" disabled="true" class="{!v.field.textclass}"
+                                    readonly="true" value="{!v.value}" />
+            </aura:if>
+
+            <aura:if isTrue="{! (v.field.type == 'date')}">
+                <ui:outputDate class="{!v.field.textclass}" value="{! v.value}" />
+            </aura:if>
+
+            <aura:if isTrue="{! (v.field.type == 'datetime')}">
+                <lightning:formattedDateTime class="{!v.field.textclass}" value="{! v.value}"/>
+            </aura:if>
+
+            <aura:if isTrue="{! (v.field.type == 'double')}">
+                <aura:if isTrue="{! (v.field.scale >= 1) }">
+                    <ui:outputNumber class="{!v.field.textclass}"  value="{! v.value}"/>
+                    <aura:set attribute="else">
+                        <lightning:formattedNumber class="{!v.field.textclass}"  value="{! v.value}" style="decimal"  minimumFractionDigits="2" maximumFractionDigits="2"/>
+                    </aura:set>
+                </aura:if>
+            </aura:if>
+
+            <aura:if isTrue="{! (v.field.type == 'file')}">
+                <lightning:fileCard fileId="{!v.value}" />
+            </aura:if>
+
+            <aura:if isTrue="{! not(empty(v.field.iconname))}">
+                &nbsp;
+                <lightning:icon class="iconsize" iconName="{!v.field.iconname}" size="xx-small" alternativeText="{!v.field.alternativeText}" variant="{!v.field.variant}"/>
+            </aura:if>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

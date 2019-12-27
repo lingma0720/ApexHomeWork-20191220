@@ -1,0 +1,12 @@
+{
+    "folders": [
+        {
+            "file_exclude_patterns": [
+                "*.sublime-project", 
+                "package.zip"
+            ], 
+            "folder_exclude_patterns": [], 
+            "path": "C:/LightningHomeWork/ApexHomeWork-20191220"
+        }
+    ]
+}

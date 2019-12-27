@@ -1,0 +1,5 @@
+<aura:event type="COMPONENT" description="Base_GeneralEvent">
+    <aura:attribute name="type" type="String"/>
+    <aura:attribute name="message" type="String"/>
+    <aura:attribute name="data" type="Object"/>
+</aura:event>

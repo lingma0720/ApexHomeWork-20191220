@@ -1,0 +1,23 @@
+<!--
+ - Created by meixing on 2019-10-04.
+ -->
+
+<aura:component description="Base_TableCellCmp">
+    <aura:attribute access="global" name="column" type="Object"/>
+    <aura:attribute access="global" name="data" type="Object"/>
+    <aura:attribute access="global" name="rowIndex" type="Integer"/>
+    <aura:attribute access="global" name="colIndex" type="Integer"/>
+
+    <aura:handler name="change" value="{!v.data}" action="{!c.configChange}"/>
+    <aura:handler name="change" value="{!v.column}" action="{!c.configChange}"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:registerEvent name="recordChange" type="c:Base_GeneralEvent" />
+
+    <td data-label="{!v.column.label}" class="{!v.column.class}" data-rowIndex="{!v.rowIndex}" data-colIndex="{!v.colIndex}">
+        <div class="{! if(v.column.isTruncate,'slds-truncate','')}">
+            {!v.body}
+        </div>
+    </td>
+</aura:component>

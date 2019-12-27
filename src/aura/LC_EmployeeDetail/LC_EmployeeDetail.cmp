@@ -1,0 +1,18 @@
+<!--
+ - Created by meixing on 2019-10-05.
+ -->
+
+<aura:component description="LC_EmployeeDetail">
+    <aura:attribute access="public" name="recordId" type="String" required="true" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.refreshEmployeeDetail}"/>
+
+    <c:Base_SobjectTypeServiceCmp aura:id="sobjectType-service" />
+    <c:Base_RecordServiceCmp aura:id="record-service"/>
+
+    <div class="slds-p-around--large">
+        <c:Base_CustomShowToastCmp aura:id="show-toast" />
+
+        <c:Base_RecordDetailCmp aura:id="employee-detail" mode="view" />
+    </div>
+</aura:component>

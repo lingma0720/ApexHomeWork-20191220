@@ -1,0 +1,53 @@
+<apex:page controller="AddAttachmentInAccount">
+    <script type="text/javascript">
+        function saveAttachment() {
+
+            var maxFileSize = 4350000;      //Base64 编码以后最大的文件字节数
+            var attachmentBody;                //附件内容
+            var attachmentName;                //附件名称
+            var fileSize;                     //附件大小
+
+            var testFiles = document.getElementById('testAttachment').files;
+            var testFile = testFiles[0];
+
+            if(testFile != undefined) {
+                if(testFile.size <= maxFileSize) {
+                    attachmentName = testFile.name;
+                    var fileReader = new FileReader();
+                    fileReader.onloadend = function(e) {
+                    attachmentBody = window.btoa(this.result);  //Base 64 encode the file
+                    fileSize = attachmentBody.length;
+                            
+                    Visualforce.remoting.Manager.invokeAction(
+                      '{!$RemoteAction.AddAttachmentInAccount.addAttachment}',
+                      attachmentName,
+                      attachmentBody,
+                      '{!accountId}',
+                      function(result,event) {
+                        alert(result);
+                      });
+                      
+                    }
+                    fileReader.onerror = function(e) {
+                      alert("上传失败，请重新尝试");
+                    }
+                    fileReader.onabort = function(e) {
+                      alert("上传失败，请重新尝试");
+                    }
+               
+                    fileReader.readAsBinaryString(testFile);  
+               
+                } else {
+                    alert("Base64 编码最大允许4.3M文件");
+                    
+                }
+            } else {
+                alert("请先选择一个附件上传。");
+                
+            }
+        }
+    </script>
+    <input type="file" id="testAttachment" value="" filename="testAttachment"/>
+    <br/>
+    <input type="Button" value="Attach" onclick="saveAttachment()"/>
+</apex:page>

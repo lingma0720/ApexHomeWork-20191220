@@ -1,0 +1,59 @@
+<aura:component controller = "LC_EmployeeController">
+	<aura:attribute access="public" name="employeeId" type="String" required="true" />
+	<aura:attribute name="partList" type="List"/>
+	<aura:attribute access="public" name="isProjectExperience" type="Boolean" />
+	<aura:attribute access="private" name="operatingRecord" type="Object" />
+	<aura:attribute access="private" name="experiences" type="List" />
+	<aura:attribute access="private" name="editor" type="Aura.Component" />
+
+	<aura:handler name="init" value="{!this}" access="public" action="{!c.getExperiences}" />
+	<!--<aura:handler name="recordChange" event="c:LC_WorkExperDetailEve" action="{!c.doRecordAction}"/>-->
+
+
+    <c:Base_RecordServiceCmp aura:id="record-service"/>
+	<div>
+		<h1 style="display: inline-block;">
+			工作经历
+		</h1>
+		<div class="div_addButtonStyle">
+	    	<lightning:button variant="success" label="add" title="add" class="bigdivborderStyle slds-button  slds-float--right" onclick="{!c.addExperience}"/>
+	    </div>
+	</div>
+	<div style="border:1px solid #b5b4b4; border-radius: 10px; margin-top: 20px">
+		<c:Base_CustomOverlayLibrary aura:id="overlayLib"/>
+        <c:Base_CustomShowToastCmp aura:id="show-toast" />
+
+		<aura:iteration items="{!v.partList}" var="part">
+			<div style="width: 100% ">
+				<table>
+					<thead>
+						<tr class="slds-text-title_caps">
+							<th style="width:30%; padding-left: 10px">时期：</th>
+							<th style="width:27%;padding-left: 10px">项目名称：</th>
+							<th style="width: 30%; padding:10px">职位：</th>
+							<th style="padding:10px">
+								<span>
+									<lightning:button variant="brand" label="Edit" title="Edit" class="slds-button  slds-float--right" value="{!part}" onclick="{!c.editExperInfor}"/>
+								</span>
+							</th>
+						</tr>	
+					</thead>
+					<tbody>
+						<tr>
+							<td style="width:30%; padding-left: 10px">{!part.Period__c}</td>
+							<td style="width:30%; padding-left: 10px">{!part.ProjectName__c}</td>
+							<td style="width:30%; padding-left: 10px">{!part.ProjectPosition__c}</td>
+							<td></td>
+						</tr>	
+					</tbody>
+				</table>
+			</div>
+			<hr style="margin-bottom: 10px"/>
+			<div>
+				<!-- <h2 style="margin-left: 10px">项目职能描述</h2> -->
+				<lightning:input  disabled="true" value="{!part.Description__c}" label="项目职能描述" style="margin:10px"/>
+			</div>
+		</aura:iteration>
+	</div>
+
+</aura:component>

@@ -1,0 +1,29 @@
+<aura:component controller="LC_EmployeeController">
+        <aura:attribute access="public" name="employeeId" type="String" required="true" />
+        <aura:attribute access="private" name="educations" type="List" />
+        <aura:attribute access="private" name="columns" type="List" />
+        <aura:attribute access="private" name="operatingRecord" type="Object" />
+        <aura:attribute access="public" name="isEducation" type="Boolean" />
+    
+        <aura:attribute access="private" name="editor" type="Aura.Component" />
+    
+        <aura:handler name="init" value="{!this}" action="{!c.getEducations}"/>
+        <aura:handler name="recordChange" event="c:Base_GeneralEvent" action="{!c.doRecordAction}"/>
+    
+        <c:Base_RecordServiceCmp aura:id="record-service"/>
+    
+        <div>
+            <c:Base_CustomOverlayLibrary aura:id="overlayLib"/>
+            <c:Base_CustomShowToastCmp aura:id="show-toast" />
+    
+            <h1> 
+                <aura:if isTrue="{!v.isEducation}">教育经历</aura:if>
+                <div style="float: right">
+                    <lightning:button label="add"  variant="brand" onclick="{!c.addEducations}"/> 
+                </div>
+            </h1>
+            <c:Base_RecordListCmp aura:id="record-list" columns="{!v.columns}" records="{!v.educations}"/>
+    
+            <!--<lightning:buttonIcon iconName="utility:record_create" alternativeText="add" variant="bare" name="add" onclick="{!c.addExperience}"/>-->
+        </div>
+    </aura:component>

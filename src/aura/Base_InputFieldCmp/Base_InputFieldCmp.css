@@ -1,0 +1,21 @@
+.THIS {
+}
+.THIS .slds-icon-action-question-post-action {
+    background-color: yellowgreen;
+    padding: 0.18rem;
+    font-size: 0.54rem;
+}
+.THIS .tooltip-container {
+    padding-left: 0.18rem;
+    display: inline-block;
+}
+
+.THIS .tooltip-container {
+    padding-left: 0.18rem;
+    display: inline-block;
+}
+
+.THIS .slds-listbox {
+    max-height: 16rem;
+    overflow-y: scroll;
+}

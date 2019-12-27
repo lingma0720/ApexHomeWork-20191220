@@ -1,0 +1,5 @@
+Hi {!Contact.Name}:
+You Case : {!Case.CaseNumber}  has  been finished;
+
+
+{!Case.Link}

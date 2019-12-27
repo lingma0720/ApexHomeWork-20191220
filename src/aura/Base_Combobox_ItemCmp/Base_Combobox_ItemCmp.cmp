@@ -1,0 +1,12 @@
+<aura:component description="Base_Combobox_ItemCmp">
+    <aura:attribute name="item" type="Object" />
+
+    <aura:attribute name="onOptionClick" type="Aura.Action" access="global" />
+
+    <li role="presentation" class="slds-listbox__item">
+        <span id="{!v.item.value}" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option" onclick="{!v.onOptionClick}">
+            <c:Base_Combobox_CheckboxCmp isSelected="{!v.item.selected}" />
+            <c:Base_OptionCmp label="{!v.item.label}"/>
+        </span>
+    </li>
+</aura:component>

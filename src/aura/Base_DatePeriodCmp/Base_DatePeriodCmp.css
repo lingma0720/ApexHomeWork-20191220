@@ -1,0 +1,53 @@
+/**
+ * 09/10/2018  Zhuoxue Jin <zhuoxue.jin@capgemini.com>
+ * - Created
+ */
+
+.THIS.c-container{
+    position: relative;
+    width:100%;
+    border: 1px solid rgb(217, 219, 221);
+    border-radius:0.25rem;
+}
+
+.THIS .custom-input .slds-input{
+    border: none;
+}
+
+.THIS .slds-input__icon{
+    display:none;
+}
+.THIS .custom-input .slds-input:focus{
+    outline: 0;
+    border-color: white;
+    background-color: white;
+    box-shadow: none;
+}
+
+.THIS .slds-input:active{
+    outline: 0;
+    border-color: white;
+    background-color: white;
+    box-shadow: none;
+}
+
+.THIS .calendar-icon {
+	position:absolute;
+	right:0.5rem;
+	top:0.5rem;
+	pointer-events: none;
+}
+
+.THIS .to-icon {
+    position: absolute;
+    right: 50%;
+    top: 0.75rem;
+    pointer-events: none;
+}
+
+.THIS .error_help{
+	color: rgb(194, 57, 52);
+	font-size: .75rem;
+    margin-top: .125rem;
+    display: block;
+}

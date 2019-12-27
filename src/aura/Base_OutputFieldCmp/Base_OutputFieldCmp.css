@@ -1,0 +1,23 @@
+.THIS {
+}
+.THIS .slds-icon-action-question-post-action {
+    background-color: yellowgreen;
+    padding: 0.18rem;
+    font-size: 0.56rem;
+}
+
+.THIS.slds-is-disabled,
+.THIS.slds-textarea[disabled], .THIS.slds-textarea.slds-is-disabled,
+.THIS.slds-input[disabled], .THIS.slds-input.slds-is-disabled{
+	cursor: auto;
+	user-select: auto;
+}
+
+.THIS .tooltip-container {
+    padding-left: 0.18rem;
+    display: inline-block;
+}
+
+.THIS.iconsize {
+	padding: 0.25rem;
+}

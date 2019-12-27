@@ -1,0 +1,37 @@
+<!--
+ - Created by meixing on 2019-10-05.
+ -->
+
+<aura:component description="LC_DepartmentStructure">
+    <aura:attribute access="public" name="employeeId" type="String" required="true" />
+    <aura:attribute access="private" name="departmentStructure" type="Object" />
+    <aura:attribute access="private" name="departments" type="List" />
+    <aura:attribute access="private" name="columns" type="List" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.getDepartmentStructure}"/>
+    <aura:handler name="rowAction" event="c:Base_GeneralEvent" action="{!c.handleRowAction}" />
+
+    <c:LC_DepartmentService aura:id="department-service" />
+
+    <div class="slds-p-around--large">
+        <c:Base_CustomShowToastCmp aura:id="show-toast" />
+
+        <h1 class="slds-text-title_bold"> Department Structure </h1>
+        <table class="slds-table slds-table--bordered slds-tree slds-table--tree">
+            <thead>
+            <tr>
+                <aura:iteration items="{!v.columns}" var="column" indexVar="index">
+                    <c:Base_TableHeaderCmp column="{!column}"/>
+                </aura:iteration>
+            </tr>
+            </thead>
+            <tbody>
+            <c:Base_TreeTableRowCmp index="0" data="{!v.departmentStructure}" columns="{!v.columns}"
+                                    level="{! v.departmentStructure.level}" disable="{! v.departmentStructure.disable}"
+                                    class="{! v.departmentStructure.class}"/>
+            </tbody>
+        </table>
+
+
+    </div>
+</aura:component>

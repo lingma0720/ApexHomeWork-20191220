@@ -1,0 +1,29 @@
+<aura:component description="LC_ExperienceEditor">
+        <aura:attribute access="public" name="record" type="Object" />
+        <aura:attribute access="public" name="isEducation" type="Boolean" />
+        <aura:attribute access="private" name="startDate" type="Date" />
+        <aura:attribute access="private" name="endDate" type="Date" />
+    
+        <aura:handler name="init" value="{!this}" action="{!c.calculateDate}"/>
+    
+        <aura:method name="getRecord" access="public" action="{!c.getRecord}" />
+    
+        <div class="slds-p-around--large">
+            <lightning:layout multipleRows="true" >
+                <lightning:layoutItem size="4" class="slds-p-vertical--small">
+                    <c:Base_FieldLabelCmp label="时期:" />
+                </lightning:layoutItem>
+                <lightning:layoutItem size="8" class="slds-p-vertical--small">
+                    <c:Base_DatePeriodCmp startDate="{!v.startDate}" endDate="{!v.endDate}" />
+                </lightning:layoutItem>
+                <aura:if isTrue="{!v.isEducation}">
+                    <lightning:layoutItem size="4" class="slds-p-vertical--small">
+                        <c:Base_FieldLabelCmp label="项目名称/学校名称" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="8" class="slds-p-vertical--small">
+                        <lightning:input variant="label-hidden" label="" value="{!v.record.SchoolName__c}" />
+                    </lightning:layoutItem>
+                </aura:if>
+            </lightning:layout>
+        </div>
+    </aura:component>

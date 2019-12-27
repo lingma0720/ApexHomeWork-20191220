@@ -1,0 +1,11 @@
+<aura:component controller="LC_EmployeeController">
+	<aura:attribute access="public" name="recordId" type="String" required="true" />
+	<aura:attribute name="employeeList" type="List" />
+	<aura:handler name="init" value="{!this}" access="public" action="{!c.getinformationcont}" />
+	<div style="border:1px solid #b5b4b4; border-radius: 10px; margin-top: 20px">
+		<aura:iteration items="{!v.employeeList}" var="employee">
+			<lightning:input class="changeHegiht" name="自我描述" disabled="true" value="{!employee.SelfDescription__c}" label="自我描述" style="margin:10px"/>
+			<lightning:input class="changeHegiht" name="技能描述" disabled="true" value="{!employee.SkillDescription__c}" label="技能描述" style="margin:10px"/>
+		</aura:iteration>
+	</div>
+</aura:component>

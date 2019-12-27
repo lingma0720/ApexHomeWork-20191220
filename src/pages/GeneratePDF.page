@@ -1,0 +1,19 @@
+<apex:page controller="AccountCtroller" renderAs="pdf">
+
+	<table style="border: 1px ; width: 100%">
+		<tr>
+			<td width="25%">Account Name</td>
+			<td width="25%">Account AccountNumber</td>
+			<td width="25%">Account Provice</td>
+			<td width="25%">Account City</td>
+		</tr>
+		<apex:repeat value="{!listOfAccounts}" var="record">
+		<tr>
+			<td>{!record.Name}</td>
+			<td>{!record.AccountNumber}</td>
+			<td>{!record.Province__c}</td>
+			<td>{!record.City__c}</td>
+		</tr>
+		</apex:repeat>
+	</table>
+	</apex:page>

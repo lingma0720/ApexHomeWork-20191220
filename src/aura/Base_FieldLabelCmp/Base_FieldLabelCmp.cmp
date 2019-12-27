@@ -1,0 +1,19 @@
+<aura:component description="Base_FieldLabelCmp">
+    <aura:attribute access="global" type="String" name="label" required="true" description="The field label"/>
+    <aura:attribute access="global" type="String" name="class" />
+    <aura:attribute access="global" type="String" name="tooltip"  description="The tooltip for the field"/>
+    <aura:attribute access="global" type="Boolean" name="required"  default="false" description="Indicate if the field is required"/>
+
+    <div class="{!v.class}">
+        <aura:if isTrue="{# v.required}">
+            <span class="slds-text-title hw-field-icon slds-text-color_error" title="{! v.label}">*</span>
+        </aura:if>
+        <span class="slds-text-title hw-field-title " title="{! v.label}">{! v.label}</span>
+
+        <aura:if isTrue="{# !empty(v.tooltip)}">
+            <div class="tooltip-container">
+                <lightning:icon iconName="action:question_post_action" title="{# v.tooltip}" size="xx-small" variant="warning"/>
+            </div>
+        </aura:if>
+    </div>
+</aura:component>

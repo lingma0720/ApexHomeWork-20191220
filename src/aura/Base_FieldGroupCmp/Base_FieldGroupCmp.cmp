@@ -1,0 +1,57 @@
+<!--
+ - 2019/1/7  Zhuoxue Jin <zhuoxue.jin@capgemini.com>
+ - Created
+ -->
+
+<aura:component description="Base_FieldGroupCmp">
+
+    <aura:attribute name="record" access="public" type="Object" required="true" description="the specified record to be rendered"/>
+    <aura:attribute name="field" access="global" type="Object" required="true" description="field definition config"/>
+    <aura:attribute name="mode" access="public" type="String" description="record mode: edit, view,new"/>
+
+    <aura:method access="global" name="getValue" action="{!c.getValue}" description="get the field values">
+    </aura:method>
+
+    <aura:method access="global" name="checkValidity" action="{!c.validate}" description="using to validate ">
+    </aura:method>
+
+    <c:Base_ES6PolyfillServiceCmp aura:id="polyfill-service"/>
+
+    <lightning:layout multipleRows="true">
+        <aura:if isTrue="{!(v.mode == 'view')}" >
+            <aura:iteration indexVar="indx" items="{!v.field.fields}" var="item">
+                <aura:if isTrue="{!not(item.type == 'field-group')}" >
+                    <lightning:layoutItem size="12" mediumDeviceSize="6" flexibility="auto" padding="around-small" largeDeviceSize="{!item.columnSize}">
+                        <c:Base_OutputFieldCmp record="{!v.record}" field="{!item}"/>
+                    </lightning:layoutItem>
+                    <aura:set attribute="else">
+                        <lightning:layoutItem size="12" mediumDeviceSize="6" flexibility="auto" largeDeviceSize="{!item.columnSize}">
+                            <c:Base_FieldGroupCmp aura:id="input-cmp" record="{!v.record}" field="{!item}" mode="{!v.mode}"/>
+                        </lightning:layoutItem>
+                    </aura:set>
+                </aura:if>
+            </aura:iteration>
+            <aura:set attribute="else">
+                <aura:iteration indexVar="indx" items="{!v.field.fields}" var="item">
+                    <aura:if isTrue="{!not(item.type == 'field-group')}" >
+                        <lightning:layoutItem size="12" mediumDeviceSize="6" flexibility="auto" padding="around-small" largeDeviceSize="{!item.columnSize}">
+                            <aura:if isTrue="{!!empty(item.type)}" >
+                                <aura:if isTrue="{!item.disabled}" >
+                                    <c:Base_OutputFieldCmp record="{!v.record}" field="{!item}"/>
+                                    <aura:set attribute="else">
+                                        <c:Base_InputFieldCmp aura:id="input-cmp" record="{!v.record}" field="{!item}"/>
+                                    </aura:set>
+                                </aura:if>
+                            </aura:if>
+                        </lightning:layoutItem>
+                        <aura:set attribute="else">
+                            <lightning:layoutItem size="12" mediumDeviceSize="6" flexibility="auto" largeDeviceSize="{!item.columnSize}">
+                                <c:Base_FieldGroupCmp aura:id="input-cmp" record="{!v.record}" field="{!item}" mode="{!v.mode}"/>
+                            </lightning:layoutItem>
+                        </aura:set>
+                    </aura:if>
+                </aura:iteration>
+            </aura:set>
+        </aura:if>
+    </lightning:layout>
+</aura:component>

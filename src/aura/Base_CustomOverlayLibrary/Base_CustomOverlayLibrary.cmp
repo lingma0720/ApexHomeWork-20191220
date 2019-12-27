@@ -1,0 +1,56 @@
+<!--
+ - 2018/10/12  Zhuoxue Jin <zhuoxue.jin@capgemini.com>
+ - Created
+ - Displays messages via modals and popovers.
+ -->
+
+<aura:component description="Base_CustomOverlayLibrary">
+    <aura:attribute access="global" name="header" type="Object" description=""/>
+    <aura:attribute access="global" name="body" type="Object" description=""/>
+    <aura:attribute access="global" name="footer" type="Object" description=""/>
+    <aura:attribute access="global" name="showCloseButton" type="Boolean" default="true" description=""/>
+    <aura:attribute access="global" name="cssClass" type="String" description=""/>
+    <aura:attribute access="global" name="closeCallback" type="Object" description=""/>
+
+    <aura:attribute access="private" name="hidden" type="Boolean" default="true" description="Indicate if the content is hidden or not"/>
+
+    <aura:method access="global" name="showCustomModal" action="{!c.handleShowCustomModalAction}" description="Displays a modal with a message.">
+        <aura:attribute type="Object" name="modalParams" required="true" description="Parameters to customize your modal with values for header, body, footer, showCloseButton, cssClass, and closeCallback."/>
+    </aura:method>
+    <aura:method access="global" name="showCustomPopover" action="{!c.handleShowCustomPopoverAction}" description="Displays a popover with a message.">
+        <aura:attribute type="Object" name="popoverParams" required="true" description="Parameters to customize your popover with values for body, referenceSelector, and cssClass."/>
+    </aura:method>
+    <aura:method access="global" name="close" action="{!c.handleCloseAction}" description="Dismisses and destroys the modal or popover.">
+    </aura:method>
+    <aura:method access="global" name="hide" action="{!c.handleHideAction}" description="Hides the modal or popover from view.">
+    </aura:method>
+    <aura:method access="global" name="show" action="{!c.handleShowAction}" description="Displays the modal or popover.">
+    </aura:method>
+
+    <div class="modal-container">
+        <aura:if isTrue="{! not(v.hidden)}">
+            <section role="dialog" tabindex="-1" aria-modal="true" class="{!v.cssClass + ' slds-modal slds-fade-in-open'}">
+                <div class="slds-modal__container">
+                    <aura:if isTrue="{!not(empty(v.header))}">
+                        <header class="slds-modal__header">
+                            <aura:if isTrue="{!v.showCloseButton}">
+                                <lightning:buttonIcon class="slds-modal__close slds-button_icon-inverse" size="large"
+                                                      iconName="utility:close" onclick="{!c.handleCloseAction}" variant="bare"/>
+                            </aura:if>
+                            {!v.header}
+                        </header>
+                    </aura:if>
+                    <div class="slds-modal__content slds-p-around_medium modalContent">
+                            {!v.body}
+                    </div>
+                    <aura:if isTrue="{!not(empty(v.footer))}">
+                        <footer class="slds-modal__footer slds-text-align_center">
+                            {!v.footer}
+                        </footer>
+                    </aura:if>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+    </div>
+</aura:component>

@@ -1,0 +1,14 @@
+/**
+ * Created by meixing on 2019-10-07.
+ */
+.THIS .slds-file__title {
+    display: none;
+}
+
+.THIS .slds-p-around_small {
+    padding: 1rem;
+}
+
+.THIS .slds-text-title{
+    font-size: 1rem;
+}

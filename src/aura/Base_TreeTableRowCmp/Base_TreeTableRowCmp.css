@@ -1,0 +1,16 @@
+/**
+ * 2018/10/18  Zhuoxue Jin <zhuoxue.jin@capgemini.com>
+ * - Created
+ */
+.THIS.node-container{
+    margin-left:2rem;
+}
+
+.THIS.sub-node-container{
+    margin-left:2rem;
+    background-color:gray;
+}
+
+.THIS .slds-tree__item{
+    min-height: 2.25rem;
+}

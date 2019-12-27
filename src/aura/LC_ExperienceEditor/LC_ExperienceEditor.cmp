@@ -1,0 +1,72 @@
+<!--
+ - Created by meixing on 2019-10-05.
+ -->
+
+<aura:component description="LC_ExperienceEditor">
+    <aura:attribute access="public" name="record" type="Object" />
+    <aura:attribute access="public" name="isWorkExperience" type="Boolean" />
+    <aura:attribute access="public" name="isProjectExperience" type="Boolean" />
+    <aura:attribute access="private" name="startDate" type="Date" />
+    <aura:attribute access="private" name="endDate" type="Date" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.calculateDate}"/>
+
+    <aura:method name="getRecord" access="public" action="{!c.getRecord}" />
+
+    <div class="slds-p-around--large">
+        <lightning:layout multipleRows="true" >
+            <lightning:layoutItem size="4" class="slds-p-vertical--small">
+                <c:Base_FieldLabelCmp label="Period :" />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="8" class="slds-p-vertical--small">
+                <c:Base_DatePeriodCmp startDate="{!v.startDate}" endDate="{!v.endDate}" />
+            </lightning:layoutItem>
+            <aura:if isTrue="{!v.isWorkExperience}">
+                <lightning:layoutItem size="4" class="slds-p-vertical--small">
+                    <c:Base_FieldLabelCmp label="Company Name :" />
+                </lightning:layoutItem>
+                <lightning:layoutItem size="8" class="slds-p-vertical--small">
+                    <lightning:input variant="label-hidden" label="" value="{!v.record.CompanyName__c}" />
+                </lightning:layoutItem>
+                <lightning:layoutItem size="4" class="slds-p-vertical--small">
+                    <c:Base_FieldLabelCmp label=" Company Position :" />
+                </lightning:layoutItem>
+                <lightning:layoutItem size="8" class="slds-p-vertical--small">
+                    <lightning:input variant="label-hidden" label="" value="{!v.record.CompanyPosition__c}" />
+                </lightning:layoutItem>
+                <lightning:layoutItem size="4" class="slds-p-vertical--small">
+                    <c:Base_FieldLabelCmp label=" Company Contact Phone :" />
+                </lightning:layoutItem>
+                <lightning:layoutItem size="8" class="slds-p-vertical--small">
+                    <lightning:input type="tel" variant="label-hidden" label="" value="{!v.record.CompanyContactPhone__c}" />
+                </lightning:layoutItem>
+            </aura:if>
+            <aura:if isTrue="{!v.isProjectExperience}">
+                <lightning:layoutItem size="4" class="slds-p-vertical--small">
+                    <c:Base_FieldLabelCmp label="Account Name :" />
+                </lightning:layoutItem>
+                <lightning:layoutItem size="8" class="slds-p-vertical--small">
+                    <lightning:input variant="label-hidden" label="" value="{!v.record.AccountName__c}" />
+                </lightning:layoutItem>
+                <lightning:layoutItem size="4" class="slds-p-vertical--small">
+                    <c:Base_FieldLabelCmp label="Project Name :" />
+                </lightning:layoutItem>
+                <lightning:layoutItem size="8" class="slds-p-vertical--small">
+                    <lightning:input variant="label-hidden" label="" value="{!v.record.ProjectName__c}" />
+                </lightning:layoutItem>
+                <lightning:layoutItem size="4" class="slds-p-vertical--small">
+                    <c:Base_FieldLabelCmp label="Project Position :" />
+                </lightning:layoutItem>
+                <lightning:layoutItem size="8" class="slds-p-vertical--small">
+                    <lightning:input variant="label-hidden" label="" value="{!v.record.ProjectPosition__c}" />
+                </lightning:layoutItem>
+            </aura:if>
+            <lightning:layoutItem size="4" class="slds-p-vertical--small">
+                <c:Base_FieldLabelCmp label="Responsition :" />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="slds-p-vertical--small">
+                <lightning:textarea variant="label-hidden" label="" value="{!v.record.Description__c}" />
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+</aura:component>

@@ -1,0 +1,13 @@
+.THIS .bigdivborderStyle{
+	border:1px solid #b5b4b4;
+	border-radius: 10px;
+}
+.THIS .div_addButtonStyle {
+	display: inline-block;
+	float: right;
+	margin-bottom: 8px
+}
+.THIS .bigdivborderStyle {
+	height: 26px;
+	margin-top: 5px
+}

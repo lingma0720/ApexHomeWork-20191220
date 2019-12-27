@@ -1,0 +1,6 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="accountFieldLabelMap" type="Map"/>
+    <aura:attribute name="contactFieldLabelMap" type="Map"/>
+    <c:FieldLabelService aura:id="service"/>
+</aura:component>

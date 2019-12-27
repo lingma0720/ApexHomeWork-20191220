@@ -1,0 +1,12 @@
+<!--
+ - Created by meixing on 2019-10-06.
+ -->
+
+<aura:component description="Base_SobjectTypeServiceCmp" controller="LC_SobjectTypeController">
+    <aura:method access="global" name="getFieldsMap" action="{!c.getFieldsMapMethod}" description="Retrieve field definition and return a Promise that resolve the list of FieldDefinition">
+        <aura:attribute type="String" name="objectName" required="true" description="Object name"/>
+        <aura:attribute type="List" name="fieldNames" required="true" description="Field names"/>
+    </aura:method>
+
+    <c:Base_ServerActionServiceCmp aura:id="actionService"/>
+</aura:component>

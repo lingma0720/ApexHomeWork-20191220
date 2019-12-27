@@ -1,0 +1,11 @@
+.THIS .cap-dropdown{
+    max-height: 350px;
+    overflow-y: scroll;
+}
+
+.THIS .icon-container-border{
+    width: 1.25rem;
+    border: 1px solid rgb(217, 219, 221);
+    border-radius: .25rem;
+    min-height: 1.25rem;
+}

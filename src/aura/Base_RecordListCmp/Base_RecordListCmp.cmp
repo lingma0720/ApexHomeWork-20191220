@@ -1,0 +1,37 @@
+<!--
+ - Created by meixing on 2019-10-04.
+ -->
+
+<aura:component description="Base_RecordListCmp">
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="UpperTableHeader" type="Boolean" default="False" description="表头是否字母大写"/>
+    <aura:attribute name="records" type="List"/>
+    <aura:attribute name="currentSortColumn" type="String"/>
+
+    <aura:handler name="TableRowFocus" event="c:Base_GeneralEvent" action="{!c.handleTableRowFocus}"/>
+
+    <div id="{#globalId + '_scrollArea'}" class="clusterize-scroll div-flow">
+        <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--resizable-cols">
+            <thead>
+            <tr class="{!if(v.UpperTableHeader, 'slds-text-title--caps', '')}">
+                <aura:iteration items="{!v.columns}" var="column">
+                    <c:Base_TableHeaderCmp aura:id="table-header" currentSortColumn="{!v.currentSortColumn}" column="{!column}"/>
+                </aura:iteration>
+            </tr>
+            </thead>
+            <tbody id="{#globalId + '_contentArea'}" class="clusterize-content">
+            <tr id="{# 'topTr' + globalId}" style="{! 'height:' + v.topOffset + 'px'}"/>
+            <aura:iteration items="{!v.records}" var="record" indexVar="index">
+                <c:Base_TableRowCmp aura:id="table-rows" data="{!record}" columns="{!v.columns}" rowIndex="{!index}"/>
+            </aura:iteration>
+            <tr id="{# 'bottomTr' + globalId}" style="{! 'height:' + v.bottomOffset + 'px'}"/>
+            </tbody>
+        </table>
+    </div>
+
+    <aura:if isTrue="{!v.records.length == 0}">
+        <div class="slds-text-align_center">
+            <p>No records to show.</p>
+        </div>
+    </aura:if>
+</aura:component>

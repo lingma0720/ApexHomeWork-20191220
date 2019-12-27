@@ -1,0 +1,26 @@
+<aura:component>
+    <aura:attribute name="state" type="String" default="info"/>
+    <aura:attribute name="iconName" type="Object" default="utility:info"/>
+
+    <aura:attribute name="content" type="String" default="Alert"/>
+
+    <aura:attribute name="hiddren" type="Boolean" default="true" access="private"/>
+
+    <aura:method name="showToast" action="{!c.show}">
+        <aura:attribute name="content" type="String"/>
+        <aura:attribute name="state" type="String"/>
+    </aura:method>
+
+    <div class="slds-is-fixed slds-notify_container">
+
+        <div class="{! 'slds-is-relative slds-notify slds-notify--toast slds-theme--' + v.state + (v.hiddren ? ' slds-hide' : '')}"  role="alert">
+            <div class="slds-m-right_x-small">
+                <lightning:icon iconName="{!v.iconName}" size="small"  variant="bare"/>
+            </div>
+
+            <div class="slds-wrap">{!v.content}</div>
+
+            <lightning:buttonIcon class="slds-notify__close" iconName="utility:close" variant="bare-inverse" onclick="{! c.close }" alternativeText="Close" size="large"/>
+        </div>
+    </div>
+</aura:component>

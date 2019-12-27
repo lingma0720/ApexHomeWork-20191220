@@ -1,0 +1,9 @@
+<aura:component description="Base_Combobox_CheckboxCmp">
+    <aura:attribute name="isSelected" type="Boolean" />
+    
+    <span class="slds-media__figure slds-listbox__option-icon icon-container-border">
+        <aura:if isTrue="{!v.isSelected}">
+            <lightning:icon iconName="utility:check" size="x-small" class="slds-icon-utility-check slds-current-color"/>
+        </aura:if>
+    </span>
+</aura:component>

@@ -1,0 +1,9 @@
+<!--
+ - Created by meixing on 2019-10-04.
+ -->
+
+<aura:event type="COMPONENT" description="Base_TableSortEvent">
+    <aura:attribute name="columnName" type="String"/>
+    <aura:attribute name="columnType" type="String"/>
+    <aura:attribute name="isSortedAsc" type="Boolean"/>
+</aura:event>

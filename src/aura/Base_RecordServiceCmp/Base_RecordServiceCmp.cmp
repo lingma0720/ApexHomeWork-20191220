@@ -1,0 +1,18 @@
+<!--
+ - 08/10/2018  Zhuoxue Jin <zhuoxue.jin@capgemini.com>
+ - Created
+ - This service component provide a set of methods using to retrieve or modify records
+ -->
+
+<aura:component description="Base_RecordServiceCmp" controller="LC_RecordController">
+    <aura:method access="global" name="getRecords" action="{!c.getRecordsMethod}" description="Retrieve active picklist entries and return a Promise that resolve the result as [{value: String, label: String, isDefaultValue: String}]">
+        <aura:attribute type="String" name="objectName" required="true" description="Object name"/>
+        <aura:attribute type="List" name="recordIds" required="true" description="Selected Record Ids"/>
+        <aura:attribute type="List" name="fieldNames" required="true" description="Selected Field names"/>
+        <aura:attribute type="String" name="filter" required="false" description="Specified the record filter"/>
+        <aura:attribute type="String" name="orders" required="false" description="Specified the record order by"/>
+        <aura:attribute type="Integer" name="limit" required="false" description="Specified the record limit"/>
+    </aura:method>
+
+    <c:Base_ServerActionServiceCmp aura:id="actionService"/>
+</aura:component>

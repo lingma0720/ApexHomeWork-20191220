@@ -1,0 +1,4 @@
+Dear {!Case.OwnerFullName}:
+    Your case {!Case.CaseNumber} need to solve it quickily,please enter the follow link.
+     
+{!Case.Link}

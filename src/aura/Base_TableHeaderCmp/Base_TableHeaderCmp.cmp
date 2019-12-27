@@ -1,0 +1,47 @@
+<!--
+ - Created by meixing on 2019-10-04.
+ -->
+
+<aura:component description="Base_TableHeaderCmp">
+    <aura:attribute name="currentSortColumn" type="String" />
+    <aura:attribute name="column" type="Object"/>
+    <aura:attribute name="ascending" type="Boolean" default="true"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:registerEvent name="sort" type="c:Base_TableSortEvent"/>
+    <aura:registerEvent name="columnEvent" type="c:Base_GeneralEvent" />
+
+    <th class="{! if(v.column.sortable, 'slds-is-sortable') +
+                  if(and(v.currentSortColumn == v.column.name, v.ascending), ' slds-is-sorted slds-is-sorted--asc') +
+                  if(and(v.currentSortColumn == v.column.name, !v.ascending), ' slds-is-sorted slds-is-sorted--desc')}"
+        data-column-name="{!v.column.name}"
+        scope="col">
+        <aura:if isTrue="{!v.column.sortable}">
+            <a class="slds-th__action slds-text-link--reset" tabindex="0" onclick="{!c.handleColumnHeaderClick}">
+                <span class="slds-assistive-text">Sort</span>
+                <span class="slds-truncate" title="{!v.column.label}">{!v.column.label}</span>
+                <div class="slds-icon_container">
+                    <aura:if isTrue="{!v.column.name == v.currentSortColumn}">
+		                <span>
+		                    <aura:if isTrue="{!v.ascending}">
+		                        <lightning:icon iconName="utility:arrowup" size="xx-small" class="sdg-sort-icon"/>
+		                            <aura:set attribute="else">
+		                                <lightning:icon iconName="utility:arrowdown" size="xx-small" class="sdg-sort-icon"/>
+		                            </aura:set>
+		                    </aura:if>
+		                </span>
+                    </aura:if>
+                </div>
+            </a>
+            <aura:set attribute="else">
+                <aura:if isTrue="{!v.column.headerEvent}">
+                    {!v.body}
+                    <aura:set attribute="else">
+                        <div class="slds-truncate defultHeader" title="{!v.column.label}">{!v.column.label}</div>
+                    </aura:set>
+                </aura:if>
+            </aura:set>
+        </aura:if>
+    </th>
+</aura:component>

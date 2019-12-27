@@ -1,0 +1,176 @@
+<aura:component>
+    <aura:attribute access="global" type="Object" name="record" required="true" description="The related record"/>
+    <aura:attribute access="global" type="Object" name="field" required="true" description="The related record"/>
+    <aura:attribute access="global" type="List" name="selections" required="true" description=""/>
+
+    <aura:attribute access="global" type="List" name="options" required="true" description=""/>
+
+    <aura:attribute access="global" type="Boolean" name="hasTooltip" required="false" description="Indicate if the tooltip need to be displayed"/>
+
+    <aura:handler name="change" value="{!v.record}" action="{!c.recordChange}"/>
+    <aura:handler name="change" value="{!v.selections}" action="{!c.lookupChange}"/>
+    <aura:handler name="change" value="{!v.value}" action="{!c.valueChange}"/>
+
+    <aura:registerEvent name="recordChange" type="c:Base_GeneralEvent" />
+
+
+    <!-- <aura:handler name="change" value="{!v.value}" action="{!c.valueSet}"/> -->
+
+    <aura:attribute access="private" type="String" name="value" description="The value to be displayed"/>
+    <aura:attribute access="private" type="String" name="url" description="The value to be link"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:method access="global" name="getValue" action="{!c.getValue}" description="fresh record detail">
+    </aura:method>
+
+    <aura:method access="global" name="setValue" action="{!c.setValue}" description="set record detail">
+        <aura:attribute type="Object" name="record" required="true" description="Object value"/>
+    </aura:method>
+
+    <aura:method access="global" name="checkValidity" action="{!c.validate}" description="using to validate ">
+    </aura:method>
+
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="6" mediumDeviceSize="6" flexibility="auto" largeDeviceSize="{!v.field.labelColumnSize}">
+            <c:Base_FieldLabelCmp label="{!v.field.label}" tooltip="{!v.field.tooltip}" required="{!v.field.required}"/>
+        </lightning:layoutItem>
+
+        <lightning:layoutItem size="6" mediumDeviceSize="6" flexibility="auto" largeDeviceSize="{!v.field.valueColumnSize}">
+            <!-- String Type -->
+            <aura:if isTrue="{! (v.field.type == 'string')}">
+                <input aura:id="input-delegate"
+                       type="text" value="{!v.value}"
+                       autocomplete="off"
+                       disabled="{!or(v.field.disabled,!v.field.isUpdateable)}"
+                       maxlength="{!v.field.length}"
+                       placeholder="{!v.field.placeholder}"
+                       required="{!v.field.required}"
+                       width="100%"
+                       class="slds-input" />
+                <!--<lightning:input name="{!v.field.name}" value="{!v.value}"
+                                 label="{!v.field.label}" variant="label-hidden"
+                                 maxlength="{!v.field.length}" placeholder="{!v.field.placeholder}"
+                                 disabled="{!or(v.field.disabled,!v.field.isUpdateable)}" required="{!v.field.required}" html-autocomplete="off"/>-->
+            </aura:if>
+            <!--Boolean Type -->
+            <aura:if isTrue="{! (v.field.type == 'boolean')}">
+                <lightning:input aura:id="input-delegate"
+                                 type="checkbox"
+                                 name="{! v.field.name}"
+                                 label="{! v.field.label}"
+                                 html-autocomplete="off"
+                                 checked="{! v.value}"
+                                 variant="label-hidden"
+                                 disabled="{!or(v.field.disabled,!v.field.isUpdateable)}"
+                                 required="{!v.field.required}"/>
+            </aura:if>
+            <!--Picklist Type -->
+            <aura:if isTrue="{! v.field.type == 'picklist'}">
+                <lightning:combobox aura:id="input-delegate"
+                                    label="{! v.field.label}"
+                                    options="{!v.field.picklistValues}"
+                                    value="{! v.value}" variant="label-hidden"
+                                    disabled="{!or(v.field.disabled,!v.field.isUpdateable)}"
+
+                                    required="{!v.field.required}"/>
+            </aura:if>
+            <aura:if isTrue="{! v.field.type == 'multipicklist'}">
+                <c:Base_ComboboxCmp aura:id="input-delegate"
+                                    label = "{! v.field.label}"
+                                    options = "{!v.field.picklistValues}"
+                                    value = "{! v.value}"
+                                    variant = "label-hidden"
+                                    disabled = "{!or(v.field.disabled,!v.field.isUpdateable)}"
+                                    placeholder = "{!v.field.placeholder}"
+                                    displayFormat = "label-detail"
+                                    valueSeparator = ";"/>
+            </aura:if>
+            <!-- Reference Type -->
+            <aura:if isTrue="{! (v.field.type == 'reference')}">
+                <aura:if isTrue="{!v.field.disabled}">
+                    <aura:if isTrue="{! v.field.disabledurl}">
+                        <lightning:formattedUrl class="{!v.field.textclass}" value="{!v.url}" label="{!v.value}" />
+                        <aura:set attribute="else">
+                            <lightning:formattedText class="{!v.field.textclass}" value="{! v.value}" />
+                        </aura:set>
+                    </aura:if>
+                    <aura:set attribute="else">
+                        <c:Base_LookupCmp selection="{!v.selections}"
+                                          onSearch="{!c.lookupSearch}"
+                                          variant="label-hidden"
+                                          placeholder="{!v.field.placeholder}"
+                                          aura:id="input-delegate"/>
+                    </aura:set>
+                </aura:if>
+            </aura:if>
+            <!-- date type -->
+            <aura:if isTrue="{! (v.field.type == 'date')}">
+                <lightning:input aura:id="input-delegate"
+                                 type="date"
+                                 name="{!v.field.name}"
+                                 value="{!v.value}"
+                                 label="{!v.field.label}"
+                                 variant="label-hidden"
+                                 placeholder="{!v.field.placeholder}"
+                                 disabled="{!or(v.field.disabled,!v.field.isUpdateable)}"
+                                 required="{!v.field.required}"
+                                 html-autocomplete="off"/>
+            </aura:if>
+            <!-- phone type -->
+            <aura:if isTrue="{! (v.field.type == 'phone')}">
+                <lightning:input aura:id="input-delegate"
+                                 type="tel"
+                                 label="{!v.field.label}"
+                                 name="{!v.field.name}"
+                                 value="{!v.value}"
+                                 variant="label-hidden"
+                                 placeholder="{!v.field.placeholder}"
+                                 disabled="{!or(v.field.disabled,!v.field.isUpdateable)}"
+                                 required="{!v.field.required}"/>
+            </aura:if>
+            <!-- email type -->
+            <aura:if isTrue="{! (v.field.type == 'email')}">
+                <lightning:input aura:id="input-delegate"
+                                 type="email"
+                                 name="{!v.field.name}"
+                                 value="{!v.value}"
+                                 label="{!v.field.label}"
+                                 variant="label-hidden"
+                                 placeholder="{!v.field.placeholder}"
+                                 disabled="{!or(v.field.disabled,!v.field.isUpdateable)}"
+                                 required="{!v.field.required}"
+                                 html-autocomplete="off"/>
+            </aura:if>
+            <!-- Long Text type -->
+            <aura:if isTrue="{! (v.field.type == 'textarea')}">
+                <lightning:textarea aura:id="input-delegate"
+                                    name="{!v.field.name}"
+                                    label="{!v.field.label}"
+                                    placeholder="{!v.field.placeholder}"
+                                    value="{!v.value}"
+                                    class="{!v.field.textclass}"
+                                    variant="label-hidden"
+                                    required="{!v.field.required}"
+                                    maxlength="{!v.field.length}"
+                                    disabled="{!or(v.field.disabled,!v.field.isUpdateable)}"/>
+            </aura:if>
+
+            <aura:if isTrue="{! (v.field.type == 'double')}">
+                <lightning:input aura:id="input-delegate"
+                                 type="number"
+                                 name="{!v.field.name}"
+                                 placeholder="{!v.field.placeholder}"
+                                 class="{!v.field.textclass}"
+                                 label="{!v.field.label}"
+                                 variant="label-hidden"
+                                 min="{!v.field.min}"
+                                 value="{! v.value}"
+                                 step="{!v.field.scale}"
+                                 disabled="{!or(v.field.disabled,!v.field.isUpdateable)}"
+                                 required="{!v.field.required}"
+                                 html-autocomplete="off"/>
+            </aura:if>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

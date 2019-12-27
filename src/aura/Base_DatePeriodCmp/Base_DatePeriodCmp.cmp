@@ -1,0 +1,32 @@
+<!--
+ - 09/10/2018  Zhuoxue Jin <zhuoxue.jin@capgemini.com>
+ - Created
+ - Represents a compound date input component for get start date and end date
+ -->
+
+<aura:component description="Base_DatePeriodCmp">
+
+    <aura:attribute name="startDate" type="Date" />
+    <aura:attribute name="endDate" type="Date" />
+
+    <aura:attribute name="hasError" type="Boolean" />
+    <aura:handler name="change" value="{!v.startDate}" action="{!c.startDateChange}"/>
+    <aura:handler name="change" value="{!v.endDate}" action="{!c.endDateChange}"/>
+
+    <div class="c-container">
+        <lightning:layout >
+            <lightning:layoutItem size="6">
+                <lightning:input class="custom-input" type="date" name="Start" value="{!v.startDate}" label="StartDate" variant="label-hidden"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6">
+                <lightning:input class="custom-input" type="date" name="End" value="{!v.endDate}" label="EndDate" variant="label-hidden"/>
+            </lightning:layoutItem>
+        </lightning:layout>
+
+
+        <lightning:icon class="to-icon" size="xx-small" iconName="utility:erect_window" alternativeText="To"/>
+        <lightning:icon class="calendar-icon" size="xx-small" iconName="utility:clock" alternativeText="Calendar"/>
+        <span class="{!if(v.hasError, 'error_help', 'slds-hide')}">Start Date cannot be later than End Date.</span>
+    </div>
+
+</aura:component>

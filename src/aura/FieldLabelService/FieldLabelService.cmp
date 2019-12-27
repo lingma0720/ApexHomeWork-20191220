@@ -1,0 +1,7 @@
+<aura:component access="global" description="Field label service" controller="FieldLabelServiceController">
+    <aura:method access="global" name="getFieldLabel" action="{!c.getFieldLabelAction}">
+        <aura:attribute type="List" name="objectAPINameList" required="true" description="object list to retrieve field label" />
+        <aura:attribute type="Map" name="objectFieldAPINameMap" description="specific fields need to retrieve via object api name"/>
+        <aura:attribute type="Function" name="callback" required="true" />
+    </aura:method>
+</aura:component>

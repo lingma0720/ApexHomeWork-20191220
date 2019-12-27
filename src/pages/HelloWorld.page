@@ -1,0 +1,163 @@
+<!--https://mlltest-dev-ed--c.visualforce.com/apex/HelloWorld?core.apexpages.request.devconsole=1&id=0012v00002ZTCtL-->
+<!--<apex:page standardController="Account">
+    <apex:form >
+        <apex:pageBlock title="My Content" mode="edit">
+            <apex:pageBlockButtons>
+                <apex:commandButton action="{!save}" value="Save"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection title="My Content Section" columns="2">
+                <apex:inputField value="{!account.name}"/>
+                <apex:inputField value="{!account.site}"/>
+                <apex:inputField value="{!account.type}"/>
+                <apex:inputField value="{!account.accountNumber}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>-->
+<!--<apex:page standardController="Account">
+   <apex:detail subject="{!account.ownerId}" relatedList="false" title="false"/> 
+</apex:page>-->
+<!--<apex:page standardController="Account">
+    <apex:pageBlock >
+    You're looking at some related lists for {!account.name}:
+    </apex:pageBlock>
+
+    <apex:relatedList list="Opportunities" />
+
+    <apex:relatedList list="Contacts">
+        <apex:facet name="header">Titles can be overriden with facets</apex:facet>
+    </apex:relatedList>
+
+    <apex:relatedList list="Cases" title="Or you can keep the image, but change the text" />
+</apex:page>-->
+
+<!--<apex:page standardController="Account">
+    <apex:form>
+    
+    <apex:pageBlock title="Edit Account">
+        <apex:pageBlockSection columns="1">
+    <apex:inputField value="{! Account.Name }"/>
+    <apex:inputField value="{! Account.Phone }"/>        
+    <apex:inputField value="{! Account.Industry }"/>        
+    <apex:inputField value="{! Account.AnnualRevenue }"/>
+</apex:pageBlockSection>
+        <apex:pageBlockButtons>
+            <apex:commandButton action="{! save }" value="Save" />        
+        </apex:pageBlockButtons>
+    </apex:pageBlock>
+    
+
+    <apex:pageBlock title="Contacts">
+		<apex:pageBlockTable value="{!Account.contacts}" var="contact">
+		    <apex:column>
+		        <apex:outputLink
+		            value="{! URLFOR($Action.Contact.Edit, contact.Id) }">
+		            Edit
+		        </apex:outputLink>
+		        &nbsp;
+		        <apex:outputLink
+		            value="{! URLFOR($Action.Contact.Delete, contact.Id) }">
+		            Del
+		        </apex:outputLink>
+		    </apex:column>
+		    <apex:column value="{!contact.Name}"/>
+		    <apex:column value="{!contact.Title}"/>
+		    <apex:column value="{!contact.Phone}"/>
+		</apex:pageBlockTable>
+    </apex:pageBlock>
+
+    </apex:form>
+</apex:page>-->
+<!--<apex:page standardController="Contact">
+    <apex:form >
+    
+    <apex:pageBlock title="Edit Contact">
+        <apex:pageBlockSection>
+            <apex:inputField value="{! Contact.FirstName }"/>
+            <apex:inputField value="{! Contact.LastName }"/> 
+            <apex:inputField value="{! Contact.Email }"/>         
+        </apex:pageBlockSection>
+        <apex:pageBlockButtons>
+            <apex:commandButton action="{! save }" value="Save" />        
+        </apex:pageBlockButtons>
+    </apex:pageBlock>
+    
+    </apex:form>
+</apex:page>-->
+
+<!-- Page: -->
+<!--<apex:page controller="sampleCon">
+    <apex:form >
+        <apex:selectList value="{!countries}" multiselect="true">
+            <apex:selectOptions value="{!items}"/>
+        </apex:selectList><p/>
+
+        <apex:commandButton value="Test" action="{!test}" rerender="out" status="status"/>
+    </apex:form>
+
+    <apex:outputPanel id="out">
+        <apex:actionstatus id="status" startText="testing...">
+            <apex:facet name="stop">
+                <apex:outputPanel>
+                    <p>You have selected:</p>
+                    <apex:dataList value="{!countries}" var="c">{!c}</apex:dataList>
+                </apex:outputPanel>
+            </apex:facet>
+        </apex:actionstatus>
+    </apex:outputPanel>
+</apex:page>-->
+
+<apex:page standardController="Contact" recordSetVar="contacts">
+    <apex:form >
+        <apex:pageBlock title="Contacts List" id="contacts_list">
+        
+            Filter: 
+            <apex:selectList value="{! filterId }" size="1">
+                <apex:selectOptions value="{! listViewOptions }"/>
+                <apex:actionSupport event="onchange" reRender="contacts_list"/>
+            </apex:selectList>
+            <!-- Contacts List -->
+            <apex:pageBlockTable value="{! contacts }" var="ct">
+                <apex:column value="{! ct.FirstName }"/>
+                <apex:column value="{! ct.LastName }"/>
+                <apex:column value="{! ct.Email }"/>
+                <apex:column value="{! ct.Account.Name }"/>
+            </apex:pageBlockTable>
+            <!-- Pagination -->
+			<table style="width: 100%">
+				<tr>
+					<td>
+					Page: <apex:outputText value=" {!PageNumber} of {! CEILING(ResultSize / PageSize) }"/>
+					</td>            
+					<td align="center">
+						<!-- Previous page -->
+						<!-- active -->
+						<apex:commandLink action="{! Previous }" value="« Previous"
+						     rendered="{! HasPrevious }"/>
+						<!-- inactive (no earlier pages) -->
+						<apex:outputText style="color: #ccc;" value="« Previous"
+						     rendered="{! NOT(HasPrevious) }"/>
+						&nbsp;&nbsp;  
+						<!-- Next page -->
+						<!-- active -->
+						<apex:commandLink action="{! Next }" value="Next »"
+						     rendered="{! HasNext }"/>
+						<!-- inactive (no more pages) -->
+						<apex:outputText style="color: #ccc;" value="Next »"
+						     rendered="{! NOT(HasNext) }"/>
+					</td>
+
+					<td align="right">
+					Records per page:
+						<apex:selectList value="{! PageSize }" size="1">
+						    <apex:selectOption itemValue="5" itemLabel="5"/>
+						    <apex:selectOption itemValue="20" itemLabel="20"/>
+						    <apex:actionSupport event="onchange" reRender="contacts_list"/>
+						</apex:selectList>
+					</td>
+				</tr>
+		    </table>
+
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,7 @@
+<aura:component access="global" description="The base service component used to invoke the server-side action">
+
+    <aura:method name="invoke" action="{!c.invokeAction}" description="Invoke the provide server-side action and return a promise.">
+        <aura:attribute name="serverAction" type="Aura.Action" required="true" description="Server-side action to invoke"/>
+    </aura:method>
+
+</aura:component>
